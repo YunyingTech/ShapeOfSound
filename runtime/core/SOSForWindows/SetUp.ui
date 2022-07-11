@@ -175,7 +175,7 @@ margin-right:30px;
 </string>
          </property>
          <property name="text">
-          <string>使用文档</string>
+          <string>关于</string>
          </property>
         </widget>
        </item>
@@ -188,6 +188,32 @@ margin-right:30px;
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QGraphicsView" name="accountLogo">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>64</width>
+             <height>64</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>64</width>
+             <height>64</height>
+            </size>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
        <item alignment="Qt::AlignHCenter">
         <widget class="QToolButton" name="loginButton">
@@ -209,26 +235,6 @@ margin-right:30px;
          </property>
         </widget>
        </item>
-       <item alignment="Qt::AlignHCenter">
-        <widget class="QToolButton" name="tranButton">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>90</height>
-          </size>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">display:block;
-margin:20px auto;
-margin-left:30px;
-margin-right:30px;
-</string>
-         </property>
-         <property name="text">
-          <string>传输列表</string>
-         </property>
-        </widget>
-       </item>
        <item>
         <widget class="Line" name="line_6">
          <property name="orientation">
@@ -243,7 +249,7 @@ margin-right:30px;
       <zorder>textButton</zorder>
       <zorder>fileButton</zorder>
       <zorder>loginButton</zorder>
-      <zorder>tranButton</zorder>
+      <zorder>horizontalLayoutWidget_3</zorder>
      </widget>
     </item>
     <item>
@@ -266,61 +272,187 @@ color:#7088FF;
 background-color:#222226;</string>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page">
-       <widget class="QLabel" name="label_4">
-        <property name="geometry">
-         <rect>
-          <x>-10</x>
-          <y>180</y>
-          <width>641</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="sizeIncrement">
-         <size>
-          <width>400</width>
-          <height>40</height>
-         </size>
-        </property>
-        <property name="font">
-         <font>
-          <family>黑体</family>
-          <pointsize>18</pointsize>
-         </font>
-        </property>
-        <property name="text">
-         <string>欢迎使用由云影团队制作的SOS系统</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
+       <layout class="QVBoxLayout" name="verticalLayout_4">
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="sizeIncrement">
+           <size>
+            <width>400</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>黑体</family>
+            <pointsize>18</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>欢迎使用由云影团队制作的SOS系统</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </widget>
       <widget class="QWidget" name="page_2"/>
-      <widget class="QWidget" name="page_3"/>
+      <widget class="QWidget" name="page_3">
+       <layout class="QHBoxLayout" name="horizontalLayout_6">
+        <item>
+         <widget class="QGraphicsView" name="aboutLogo">
+          <property name="minimumSize">
+           <size>
+            <width>128</width>
+            <height>128</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>128</width>
+            <height>128</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
       <widget class="QWidget" name="page_4">
        <property name="styleSheet">
         <string notr="true">background-color:#222226;</string>
        </property>
-       <layout class="QGridLayout" name="gridLayout_2">
-        <item row="0" column="1">
-         <layout class="QGridLayout" name="gridLayout">
-          <item row="0" column="4">
-           <spacer name="verticalSpacer">
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_9">
+          <property name="font">
+           <font>
+            <family>微软雅黑 Light</family>
+            <pointsize>25</pointsize>
+            <weight>3</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+            <underline>false</underline>
+           </font>
+          </property>
+          <property name="whatsThis">
+           <string>font-align:center;</string>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">text-align:center;
+font: 25 25pt &quot;微软雅黑 Light&quot;;
+color:#7088FF;</string>
+          </property>
+          <property name="text">
+           <string>音 之 形</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <item>
+           <spacer name="horizontalSpacer">
             <property name="orientation">
-             <enum>Qt::Vertical</enum>
+             <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>20</width>
+              <width>40</width>
               <height>20</height>
              </size>
             </property>
            </spacer>
           </item>
-          <item row="7" column="6">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QLineEdit" name="username_2">
+              <property name="styleSheet">
+               <string notr="true"> background-color: rgb(192,192, 192); 
+
+border:2px groove gray;
+border-radius:10px;
+padding:2px 4px;
+border-style: outset;
+color: rgb(0, 0, 0); 
+min-height:10px;
+width:250px;
+height:50px;</string>
+              </property>
+              <property name="text">
+               <string>用户名</string>
+              </property>
+              <property name="placeholderText">
+               <string>请输入手机号码</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="password">
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(192,192, 192); 
+border:2px groove gray;
+border-radius:10px;
+padding:2px 4px;
+border-style: outset;
+color: rgb(0, 0, 0); 
+min-height:10px;
+width:250px;
+height:50px;</string>
+              </property>
+              <property name="echoMode">
+               <enum>QLineEdit::Password</enum>
+              </property>
+              <property name="placeholderText">
+               <string>密码</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
            <spacer name="horizontalSpacer_2">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -333,20 +465,37 @@ background-color:#222226;</string>
             </property>
            </spacer>
           </item>
-          <item row="3" column="4">
-           <spacer name="verticalSpacer_3">
+         </layout>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_4">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <spacer name="horizontalSpacer_4">
             <property name="orientation">
-             <enum>Qt::Vertical</enum>
+             <enum>Qt::Horizontal</enum>
             </property>
             <property name="sizeHint" stdset="0">
              <size>
-              <width>20</width>
-              <height>40</height>
+              <width>40</width>
+              <height>20</height>
              </size>
             </property>
            </spacer>
           </item>
-          <item row="15" column="4" alignment="Qt::AlignBottom">
+          <item>
            <widget class="QPushButton" name="loginButton_3">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -397,43 +546,8 @@ border-style: inset;}&quot;
             </property>
            </widget>
           </item>
-          <item row="16" column="4">
-           <spacer name="verticalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="7" column="3" colspan="3">
-           <widget class="QLineEdit" name="username_2">
-            <property name="styleSheet">
-             <string notr="true"> background-color: rgb(192,192, 192); 
-
-border:2px groove gray;
-border-radius:10px;
-padding:2px 4px;
-border-style: outset;
-color: rgb(0, 0, 0); 
-min-height:10px;
-width:250px;
-height:50px;</string>
-            </property>
-            <property name="text">
-             <string>用户名</string>
-            </property>
-            <property name="placeholderText">
-             <string>请输入手机号码</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="2">
-           <spacer name="horizontalSpacer">
+          <item>
+           <spacer name="horizontalSpacer_3">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -445,117 +559,35 @@ height:50px;</string>
             </property>
            </spacer>
           </item>
-          <item row="1" column="4" rowspan="2" alignment="Qt::AlignHCenter">
-           <widget class="QLabel" name="label_9">
-            <property name="font">
-             <font>
-              <family>微软雅黑 Light</family>
-              <pointsize>25</pointsize>
-              <weight>3</weight>
-              <italic>false</italic>
-              <bold>false</bold>
-              <underline>false</underline>
-             </font>
-            </property>
-            <property name="whatsThis">
-             <string>font-align:center;</string>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">text-align:center;
-font: 25 25pt &quot;微软雅黑 Light&quot;;
-color:#7088FF;</string>
-            </property>
-            <property name="text">
-             <string>音 之 形</string>
-            </property>
-           </widget>
-          </item>
-          <item row="15" column="2" rowspan="2" alignment="Qt::AlignBottom">
-           <widget class="QPushButton" name="pushButton_6">
-            <property name="styleSheet">
-             <string notr="true">color:#7088FF;
+         </layout>
+        </item>
+        <item>
+         <widget class="QPushButton" name="pushButton_6">
+          <property name="styleSheet">
+           <string notr="true">color:#7088FF;
 font: 50 12pt &quot;微软雅黑 Light&quot;;
 background-color:transparent;</string>
-            </property>
-            <property name="text">
-             <string>用户注册</string>
-            </property>
-           </widget>
-          </item>
-          <item row="15" column="5">
-           <spacer name="horizontalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::MinimumExpanding</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="15" column="3">
-           <spacer name="horizontalSpacer_3">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-            <property name="sizeType">
-             <enum>QSizePolicy::MinimumExpanding</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>20</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-          <item row="9" column="3" colspan="3">
-           <widget class="QLineEdit" name="password">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(192,192, 192); 
-border:2px groove gray;
-border-radius:10px;
-padding:2px 4px;
-border-style: outset;
-color: rgb(0, 0, 0); 
-min-height:10px;
-width:250px;
-height:50px;</string>
-            </property>
-            <property name="echoMode">
-             <enum>QLineEdit::Password</enum>
-            </property>
-            <property name="placeholderText">
-             <string>密码</string>
-            </property>
-           </widget>
-          </item>
-          <item row="16" column="1">
-           <widget class="QLabel" name="label_8">
-            <property name="text">
-             <string/>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="4">
-           <spacer name="verticalSpacer_4">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-            <property name="sizeHint" stdset="0">
-             <size>
-              <width>20</width>
-              <height>40</height>
-             </size>
-            </property>
-           </spacer>
-          </item>
-         </layout>
+          </property>
+          <property name="text">
+           <string>用户注册</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <layout class="QGridLayout" name="gridLayout"/>
         </item>
        </layout>
       </widget>
@@ -724,7 +756,7 @@ height:50px;</string>
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>18</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>

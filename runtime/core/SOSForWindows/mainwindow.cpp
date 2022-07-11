@@ -18,6 +18,9 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+  QIcon logo(":/SOSForWindows/aboutLogo.png");
+  this->setWindowIcon(logo);
+    this->installEventFilter(this);
     setWindowFlag(Qt::FramelessWindowHint);
     setAttribute(Qt::WA_TranslucentBackground);
     this->txtNum = 0;
@@ -25,7 +28,6 @@ MainWindow::MainWindow(QWidget *parent)
     QFont ft;
     ft.setPointSize(12);
     ui->label->setFont(ft);
-    this->setMouseTracking(true);
     QPoint mousepos = this->pos();
     if(mousepos.rx()>=675)
     {
@@ -39,6 +41,9 @@ MainWindow::MainWindow(QWidget *parent)
     this->model_path = "";
     this->waitSignal = 0;
     this->predicting = false;
+    ui->stopRecBtn->setVisible(false);
+    Qt::WindowFlags m_flags = windowFlags();
+    setWindowFlags(m_flags | Qt::WindowStaysOnTopHint);
 }
 
 MainWindow::~MainWindow()
@@ -67,6 +72,9 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 void MainWindow::on_pushButton_clicked()
 {
   captureThread = new CaptureThread(&this->bufferUtil, &this->waitSignal);
+  connect(this, SIGNAL(sendStopCapture(bool)), this->captureThread,
+          SLOT(CaptureThread::stopCapture(bool)));
+  emit sendStopCapture(false);
   this->captureThread->wave_path = this->cache_path.c_str();
   if (loaded_model) {
     connect(captureThread, SIGNAL(threadRunning(bool)), this,
@@ -93,12 +101,36 @@ void MainWindow::on_pushButton_clicked()
     ui->label->setAlignment(Qt::AlignCenter);
 }
 
+bool MainWindow::eventFilter(QObject* obj, QEvent* event) {
+  if (obj == this && event->type() == QEvent::WindowDeactivate) {
+   
+  }
+  return false;
+}
+
+
+void MainWindow::on_stopRecBtn_clicked() {
+  this->predicting = false;
+  emit sendStopCapture(true);
+  try {
+    if (this->captureThread->isFinished()) {
+      this->captureThread->destroyed();
+    }
+    ui->pushButton->setDisabled(false);
+    ui->pushButton->setVisible(true);
+    ui->stopRecBtn->setVisible(false);
+  } catch (QException & e) {
+    qDebug() << "OK";
+  }
+}
+
 
 void MainWindow::record_wave(bool status) {
   if (status) {
     ui->pushButton->setDisabled(true);
+    ui->pushButton->setVisible(false);
+    ui->stopRecBtn->setVisible(true);
   } else {
-    ui->pushButton->setDisabled(false);
     this->predict = new PredictThread(&this->bufferUtil, &this->waitSignal);
     connect(predict, SIGNAL(PthreadRunning(bool)), this,
             SLOT(predict_slot(bool)));

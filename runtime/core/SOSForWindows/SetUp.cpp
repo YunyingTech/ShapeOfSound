@@ -12,6 +12,7 @@
 #include "base64.h"
 #include "rsa_a.h"
 #include "MySock.h"
+#include <qicon.h>
 
 #include<string>
 #include<QMessageBox>
@@ -22,6 +23,14 @@ SetUp::SetUp(QWidget *parent)
     , ui(new Ui::SetUp)
 {
     ui->setupUi(this);
+  QIcon logo(":/SOSForWindows/aboutLogo.png");
+    this->setWindowIcon(logo);
+  QGraphicsScene* scene = new QGraphicsScene;
+    scene->addPixmap(QPixmap(":/SOSForWindows/aboutLogo.png"));
+    
+  ui->aboutLogo->setScene(scene);
+    ui->aboutLogo->show();
+
 }
 
 SetUp::~SetUp()

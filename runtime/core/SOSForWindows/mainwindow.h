@@ -37,6 +37,10 @@ public:
     void paintEvent(QPaintEvent *);
     void mousePressEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
+    bool eventFilter(QObject* obj, QEvent* event);
+
+signals:
+    void sendStopCapture(bool status);
 
 private slots:
     void on_pushButton_clicked();
@@ -44,6 +48,7 @@ private slots:
     void predict_slot(bool);
     void recvResult(const char*);
     void on_toolButton_SetUp_clicked();
+    void on_stopRecBtn_clicked();
     void on_del_clicked();
 
    private:

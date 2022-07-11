@@ -44,6 +44,8 @@ set(PROJECT_SOURCES
         SetUp.cpp
         SetUp.h
         Setup.ui
+        SOSForWindows.qrc
+        SOSForWindows.rc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

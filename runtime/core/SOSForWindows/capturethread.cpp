@@ -17,6 +17,10 @@ CaptureThread::CaptureThread(queue<BufferUtil>* bufferU,int * signal) {
 void CaptureThread::run() {
   while (1) {
     emit threadRunning(true);
+    if (stopSignal) {
+      break;
+      emit threadRunning(false);
+    }
     BufferUtil temp;
     this->au = new AudioStream(&temp);
     au->startCapture();
@@ -26,6 +30,8 @@ void CaptureThread::run() {
     emit threadRunning(false);
   }
 }
+
+void CaptureThread::stopCapture(bool status) { stopSignal = status; }
 
 
 CaptureThread::~CaptureThread() { delete this->au; }

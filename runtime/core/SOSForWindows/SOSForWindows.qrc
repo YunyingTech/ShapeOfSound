@@ -1,4 +1,5 @@
 <RCC>
-    <qresource prefix="SOSForWindows">
+    <qresource prefix="/SOSForWindows">
+        <file>aboutLogo.png</file>
     </qresource>
 </RCC>

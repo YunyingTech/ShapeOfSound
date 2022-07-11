@@ -6,12 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>832</width>
+    <width>1000</width>
     <height>98</height>
    </rect>
   </property>
+  <property name="mouseTracking">
+   <bool>false</bool>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow{
+	border-radius:20px;
+}</string>
   </property>
   <property name="dockOptions">
    <set>QMainWindow::AllowTabbedDocks|QMainWindow::AnimatedDocks|QMainWindow::VerticalTabs</set>
@@ -20,6 +28,19 @@
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+	background-color:rgba(255,255,255,150);
+	border:none;
+	border-radius:5px;
+}
+
+QToolButton{
+	background-color:rgba(255,255,255,150);
+	border:none;
+	border-radius:5px;
+}</string>
+   </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
      <spacer name="horizontalSpacer">
@@ -44,6 +65,7 @@
       </property>
       <property name="font">
        <font>
+        <family>.萍方-简</family>
         <pointsize>-1</pointsize>
         <weight>50</weight>
         <italic>false</italic>
@@ -51,7 +73,10 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">font: 20px;</string>
+       <string notr="true">QLabel{
+	font: 20px;
+	color:white;
+}</string>
       </property>
       <property name="text">
        <string/>
@@ -84,8 +109,33 @@
         <height>50</height>
        </size>
       </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
       <property name="text">
        <string>开始识别</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="stopRecBtn">
+      <property name="minimumSize">
+       <size>
+        <width>150</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>150</width>
+        <height>50</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>停止识别</string>
       </property>
      </widget>
     </item>
