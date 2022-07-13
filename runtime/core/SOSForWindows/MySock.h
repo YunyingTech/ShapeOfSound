@@ -5,6 +5,8 @@
 测试人员：郭明皓 史家旭
 审核人员：郭明皓 陈嘉晖
 */
+
+#pragma once
 #ifndef MYSOCK_H
 #define MYSOCK_H
 
@@ -12,7 +14,7 @@
 #include<iostream>
 #include<cstdlib>
 #include<time.h>
-#include<winsock2.h>                
+#include<winsock2.h>
 #pragma comment(lib,"ws2_32.lib")
 using namespace std;
 

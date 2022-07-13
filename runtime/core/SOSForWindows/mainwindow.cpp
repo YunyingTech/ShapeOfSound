@@ -5,6 +5,7 @@
 测试人员：郭明皓
 审核人员：郭明皓，刘元庆
 */
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QtWidgets>
@@ -13,6 +14,7 @@
 #include <iostream>
 #include<QmessageBox>
 #include "SetUp.h"
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -41,15 +43,33 @@ MainWindow::MainWindow(QWidget *parent)
     this->model_path = "";
     this->waitSignal = 0;
     this->predicting = false;
+    this->setAttribute(Qt::WA_Hover, true);
     ui->stopRecBtn->setVisible(false);
+    ui->pushButton->setVisible(false);
+    ui->del->setVisible(false);
+    ui->toolButton_SetUp->setVisible(false);
     Qt::WindowFlags m_flags = windowFlags();
     setWindowFlags(m_flags | Qt::WindowStaysOnTopHint);
+    this->setUpUi = new SetUp(this);
+    connect(setUpUi, SIGNAL(setLabelRGB(int,int,int)), this,
+            SLOT(setLabelRGBSlot(int, int, int)));
+    ui->label->setText("未加载模型");
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::setLabelRGBSlot(int r, int g, int b) { 
+    string labelQss = ("QLabel{"
+	                    "font: 20px;"
+                        "color : rgb(" + to_string(r) + ", " + to_string(g) + "," + to_string(b) + ");"
+                        "}");
+  qDebug() << labelQss.c_str();         
+    ui->label->setStyleSheet(labelQss.c_str());
+}
+
 
 void MainWindow::paintEvent(QPaintEvent *)
 {
@@ -82,7 +102,7 @@ void MainWindow::on_pushButton_clicked()
 
     this->captureThread->start();
   } else {
-    QMessageBox::information(NULL, "Load Model", "请先加载模型");
+    ui->label->setText("请先加载模型");
     this->model_path =
         QFileDialog::getExistingDirectory(NULL, "获取模型目录", "./model")
             .toStdString();
@@ -90,9 +110,7 @@ void MainWindow::on_pushButton_clicked()
       this->decoder = wenet_init(this->model_path.c_str());
       std::chrono::system_clock::time_point t =
           std::chrono::system_clock::now();
-      QMessageBox::information(NULL,
-                               "Load OK",
-          (get_date_time() + "模型加载成功\n").c_str());
+      ui->label->setText((get_date_time() + "模型加载成功\n").c_str());
       this->loaded_model = true;
 
     }
@@ -102,8 +120,23 @@ void MainWindow::on_pushButton_clicked()
 }
 
 bool MainWindow::eventFilter(QObject* obj, QEvent* event) {
-  if (obj == this && event->type() == QEvent::WindowDeactivate) {
-   
+  if (event->type() == QEvent::HoverEnter) {
+    if (ui->pushButton->isEnabled()) {
+      ui->pushButton->setVisible(true);
+    } else {
+      ui->stopRecBtn->setVisible(true);
+    }
+    ui->del->setVisible(true);
+    ui->toolButton_SetUp->setVisible(true);
+  }
+  if (event->type() == QEvent::HoverLeave) {
+    if (ui->pushButton->isEnabled()) {
+      ui->pushButton->setVisible(false);
+    } else {
+      ui->stopRecBtn->setVisible(false);
+    }
+    ui->del->setVisible(false);
+    ui->toolButton_SetUp->setVisible(false);
   }
   return false;
 }
@@ -169,6 +202,7 @@ void MainWindow::recvResult(const char* ret) {
     else {
       ui->label->setText(retStdString.c_str());
     }
+    
   }
 }
 
@@ -200,9 +234,7 @@ std::string MainWindow::get_date_time() {
 
 void MainWindow::on_toolButton_SetUp_clicked()
 {
-    SetUp* parent =new SetUp();
-    parent ->show();//显示界面
-
+  setUpUi->show();  //显示界面
 }
 
 void MainWindow::on_del_clicked() { 

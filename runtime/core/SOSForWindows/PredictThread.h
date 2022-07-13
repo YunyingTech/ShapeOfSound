@@ -21,6 +21,8 @@
 //#define slots Q_SLOTS
 //#define signals Q_SIGNALS
 
+
+#pragma once
 #include "frontend/wav.h"
 #include "api/wenet_api.h"
 

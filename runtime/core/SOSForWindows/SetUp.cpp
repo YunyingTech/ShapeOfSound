@@ -8,29 +8,19 @@
 
 
 #include "SetUp.h"
-#include "ui_SetUp.h"
-#include "base64.h"
-#include "rsa_a.h"
-#include "MySock.h"
-#include <qicon.h>
 
-#include<string>
-#include<QMessageBox>
 
 using namespace std;
 SetUp::SetUp(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::SetUp)
 {
-    ui->setupUi(this);
+  this->mainPtr = (void*)parent;
+  ui->setupUi(this);
   QIcon logo(":/SOSForWindows/aboutLogo.png");
-    this->setWindowIcon(logo);
-  QGraphicsScene* scene = new QGraphicsScene;
-    scene->addPixmap(QPixmap(":/SOSForWindows/aboutLogo.png"));
-    
-  ui->aboutLogo->setScene(scene);
-    ui->aboutLogo->show();
-
+  this->setWindowIcon(logo);
+  ui->label->setOpenExternalLinks(true);
+  ui->modelPathLineEdit->setText(((MainWindow*)mainPtr)->model_path.c_str());
 }
 
 SetUp::~SetUp()
@@ -38,6 +28,28 @@ SetUp::~SetUp()
     delete ui;
 }
 
+void SetUp::on_textFontBtn_clicked() {
+  int r, g, b;
+  try {
+    r = ui->textFontR->text().toInt();
+    g = ui->textFontG->text().toInt();
+    b = ui->textFontB->text().toInt();
+    emit setLabelRGB(r, g, b);
+    qDebug() << "OK"
+             << " " << r << " " << g << " " << b;
+  } catch (exception& e) {
+    QMessageBox::information(NULL, "错误",
+                             "请输入整数RGB数值，并且保持范围在0-255之间");
+  }
+}
+
+
+void SetUp::on_modelBrowser_clicked() {
+  string model_path =
+      QFileDialog::getExistingDirectory(NULL, "获取模型目录", "./model")
+          .toStdString();
+  ui->modelPathLineEdit->setText(model_path.c_str());
+}
 
 void SetUp::on_fileButton_clicked()
 { ui->stackedWidget->setCurrentIndex(0); }
@@ -61,6 +73,22 @@ void SetUp::on_loginButton_clicked()
     ui->stackedWidget->setCurrentIndex(3);
 }
 
+void SetUp::on_modelPathCheckBtn_clicked() {
+  string model_path = ui->modelPathLineEdit->text().toStdString();
+  if (model_path == "") {
+    QMessageBox::information(NULL, "路径设置无效", "模型路径不能为空");
+    return;
+  } else {
+    try {
+      ((MainWindow*)mainPtr)->model_path = model_path;
+      ((MainWindow*)mainPtr)->loaded_model = true;
+      ((MainWindow*)mainPtr)->decoder = wenet_init(model_path.c_str());
+    } catch (exception& e) {
+      qDebug() << e.what();
+    }
+  }
+}
+
 
 void SetUp::on_pushButton_6_clicked()
 {
@@ -78,8 +106,8 @@ void SetUp::on_loginButton_3_clicked()
     char buffer[1024];
     char inBuf[1024];
     int num;
-    num = recv(m_SockClient, buffer, 1024, 0);             //×èÈûº¯Êý,µÈ´ý½ÓÊÜÄÚÈÝ
-    if (num > 0)                //×èÈû
+    num = recv(m_SockClient, buffer, 1024, 0); 
+    if (num > 0)   
     {
         // cout << "Receive form server" << buffer << endl;
 

@@ -5,6 +5,8 @@
 测试人员：郭明皓 史家旭
 审核人员：郭明皓 陈嘉晖
 */
+
+#pragma once
 #ifndef RSA_A_H
 #define RSA_A_H
 #include<vector>

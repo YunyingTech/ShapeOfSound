@@ -6,7 +6,6 @@
 审核人员：郭明皓，刘元庆
 */
 #pragma once
-#pragma once
 #include <string.h>
 
 typedef unsigned char BYTE;

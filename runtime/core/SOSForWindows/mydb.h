@@ -5,6 +5,8 @@
 测试人员：郭明皓 史家旭
 审核人员：郭明皓 刘元庆
 */
+
+#pragma once
 #ifndef MYDB_H
 #define MYDB_H
 #include<string>

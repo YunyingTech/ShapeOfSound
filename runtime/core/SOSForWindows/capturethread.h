@@ -5,6 +5,8 @@
 测试人员：郭明皓 樊泽瑞
 审核人员：郭明皓 刘元庆
 */
+
+#pragma once
 #ifndef CAPTURETHRAED_H
 #define CAPTURETHRAED_H
 #include <QThread>

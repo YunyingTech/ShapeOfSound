@@ -5,6 +5,8 @@
 测试人员：郭明皓 樊泽瑞
 审核人员：郭明皓 
 */
+
+#pragma once
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
@@ -23,8 +25,13 @@
 #include "BufferUtil.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
+namespace Ui {
+class MainWindow;
+}  // namespace Ui
 QT_END_NAMESPACE
+
+
+class SetUp;
 
 class MainWindow : public QMainWindow
 {
@@ -51,23 +58,29 @@ private slots:
     void on_stopRecBtn_clicked();
     void on_del_clicked();
 
-   private:
-    Ui::MainWindow *ui;
+public slots:
+    void setLabelRGBSlot(int, int, int);
+
+private:
     QPoint m_startPoint;
     int txtNum;
     CaptureThread* captureThread;
-    string model_path;
-    void* decoder;
     std::string get_date_time();
-    bool loaded_model;
     string cache_path;
     PredictThread* predict;
     queue<BufferUtil> bufferUtil;
     int waitSignal;
     bool predicting;
+    Ui::MainWindow* ui;
+    SetUp* setUpUi;
+
+
+ public:
+    string model_path;
+    void* decoder;
+    bool loaded_model;
 
 };
-
 
 
 #endif // MAINWINDOW_H

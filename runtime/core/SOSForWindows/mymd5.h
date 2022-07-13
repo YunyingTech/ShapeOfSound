@@ -5,6 +5,8 @@
 测试人员：郭明皓 史家旭
 审核人员：郭明皓 刘元庆
 */
+
+#pragma once
 #ifndef MYMD5_H
 #define MYMD5_H
 
