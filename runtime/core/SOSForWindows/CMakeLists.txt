@@ -73,6 +73,7 @@ else()
 endif()
 
 target_link_libraries(SOSForWindows PUBLIC Qt${QT_VERSION_MAJOR}::Widgets wenet_api decoder frontend)
+target_compile_definitions(SOSForWindows PRIVATE WIN32_LEAN_AND_MEAN)
 
 set_target_properties(SOSForWindows PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER www.xayytech.com
