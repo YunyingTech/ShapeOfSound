@@ -1,11 +1,4 @@
 ﻿#pragma once
-/*
-模块名称：字幕计算模块
-实现功能：录制音频，多线程调度
-完成作者：樊泽瑞
-测试人员：郭明皓
-审核人员：郭明皓，陈嘉晖
-*/
 
 #include <QMessageBox>
 #include <QtWidgets/QMainWindow>

@@ -1,12 +1,4 @@
-﻿/*
-模块名称：音频处理模块
-实现功能：录制音频，处理音频数据
-完成作者：樊泽瑞
-测试人员：郭明皓 樊泽瑞
-审核人员：郭明皓 刘元庆
-*/
-
-#pragma once
+﻿#pragma once
 #ifndef AUDIOSTREAM_H
 #define AUDIOSTREAM_H
 

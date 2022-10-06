@@ -1,10 +1,4 @@
-/*
-模块名称：字幕计算模块
-实现功能：多线程调度，处理结果
-完成作者：樊泽瑞
-测试人员：郭明皓
-审核人员：郭明皓，陈嘉晖
-*/
+
 #ifndef PREDICTTHREAD_H
 #define PREDICTTHREAD_H
 #pragma once

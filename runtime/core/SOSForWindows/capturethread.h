@@ -1,11 +1,3 @@
-/*
-模块名称：多线程处理模块
-实现功能：处理音频数据
-完成作者：樊泽瑞
-测试人员：郭明皓 樊泽瑞
-审核人员：郭明皓 刘元庆
-*/
-
 #pragma once
 #ifndef CAPTURETHRAED_H
 #define CAPTURETHRAED_H
