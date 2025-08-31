@@ -62,7 +62,6 @@ REFERENCE_TIME hnsActualDuration;
 IMMDeviceCollection* pCollection = NULL;
 
 BYTE* pbyCaptureBuffer;
-
 //
 //  A wave file consists of:
 //
@@ -95,59 +94,79 @@ const BYTE WaveHeader[] =
 //  Static wave DATA tag.
 const BYTE WaveData[] = { 'd', 'a', 't', 'a' };
 
-void pcm_downsample(const BYTE* Buffer, const size_t BufferSize,
-                    const WAVEFORMATEX* WaveFormat, BYTE* OutBuffer,size_t *nBufferSize) {
-  bool switch_status = true;
-  union Cov {
-    BYTE data[4];
-    float sdata;
-  } sRead{}, tempSum{};
-  //    short sRead = 0;
-  //     short tempSum = 0;
-  int size = 0;
-  int flag = 0;
-  //int nSampleRatio = WaveFormat->nSamplesPerSec / 16000;
-  int nSampleRatio = 3;
-  // FILE *fp = (FILE *)Buffer;
-  // FILE *fp_down = (FILE *)OutBuffer;
-  size_t position = 0;
-  size_t fp_position = 0;
-  while (position < BufferSize) {
-    /*sRead.sdata =
-        (float)((Buffer[position] << 24) + (Buffer[position + 1] << 16) +
-                (Buffer[position+2] << 8) +
-                          (Buffer[position+3] << 0));*/
-    int e_len = sizeof(float);
-    memcpy_s(&sRead, e_len, Buffer + position, e_len);
-    position += e_len;
-    // size = fread(&sRead, 2, 1, fp); // 一次读两个字节，16bit
-    // size = fread(&sRead, 4, 1, fp); // 一次读四个字节，32bit
-    if (size >= 0) {
-      tempSum.sdata = tempSum.sdata + sRead.sdata;  // 求和
-      flag++;
-      if (flag == nSampleRatio)  // 如果取了三个点
-      {
-        flag = 0;
-        tempSum.sdata =
-            tempSum.sdata /
-            nSampleRatio;  // 求平均值，你可以根据自己需要去修改，不一定要求平均值，可以直接取一个点
-        /*OutBuffer[fp_position++] = tempSum.data[3];
-        OutBuffer[fp_position++] = tempSum.data[2];
-        OutBuffer[fp_position++] = tempSum.data[1];
-        OutBuffer[fp_position++] = tempSum.data[0];*/
-        short sWrite = (short)(tempSum.sdata / 1.4142135623730951F * SHRT_MAX);
-        
-        if (switch_status) {
-          memcpy_s(OutBuffer + fp_position, sizeof(short), &sWrite,
-                   sizeof(short));
-          fp_position += sizeof(short);
-        }
-        switch_status = !switch_status;
-        tempSum.sdata = 0;
-      }
+#include <cstring>
+#include <cmath>
+
+void pcm_downsample(
+    const BYTE* Buffer, 
+    const size_t BufferSize,
+    const WAVEFORMATEX* WaveFormat, 
+    BYTE* OutBuffer, 
+    size_t* nBufferSize
+) {
+    // 输入校验
+    if (!Buffer || !OutBuffer || !WaveFormat || !nBufferSize || BufferSize == 0) {
+        if (nBufferSize) *nBufferSize = 0;
+        return;
     }
-  }
-  *nBufferSize = fp_position;
+
+    // 只支持 32-bit float PCM 输入
+    if (WaveFormat->wBitsPerSample != 32 || WaveFormat->wFormatTag != WAVE_FORMAT_IEEE_FLOAT) {
+        *nBufferSize = 0;
+        return;
+    }
+
+    // 假设单通道（Mono），多通道需额外处理
+    if (WaveFormat->nChannels != 1) {
+        *nBufferSize = 0;
+        return;
+    }
+
+    const int srcSampleRate = WaveFormat->nSamplesPerSec;
+    const int dstSampleRate = 16000;  // 目标采样率
+
+    // 计算降采样比例（浮点以支持非整数比）
+    const float ratio = static_cast<float>(srcSampleRate) / dstSampleRate;
+
+    // 每个样本 4 字节 (32-bit float)
+    const size_t sampleSize = sizeof(float);
+    const size_t numInputSamples = BufferSize / sampleSize;
+
+    float accumulator = 0.0f;
+    int count = 0;
+    size_t outIndex = 0;
+
+    for (size_t i = 0; i < numInputSamples; ++i) {
+        float sample;
+        memcpy(&sample, Buffer + i * sampleSize, sampleSize);
+
+        accumulator += sample;
+        count++;
+
+        // 当累计足够样本对应一个输出样本时
+        if (count >= std::round(ratio)) {
+            // 求平均（抗混叠）
+            float avg_sample = accumulator / count;
+
+            // 转为 16-bit signed integer，注意范围 [-1.0, 1.0] -> [-32768, 32767]
+            // 32-bit float PCM 通常归一化在 [-1.0, 1.0]
+            short out_sample = static_cast<short>(std::clamp(
+                avg_sample * 32767.0f,
+                -32768.0f,
+                32767.0f
+            ));
+
+            // 写入输出缓冲区（小端字节序）
+            memcpy(OutBuffer + outIndex, &out_sample, sizeof(short));
+            outIndex += sizeof(short);
+
+            // 重置累加器
+            accumulator = 0.0f;
+            count = 0;
+        }
+    }
+
+    *nBufferSize = outIndex;
 }
 
 AudioStream::AudioStream() {}
